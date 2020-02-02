@@ -1,0 +1,62 @@
+﻿<Window x:Class="Bds.Tech.Test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bds.Tech.Test"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <local:SearchParameterConverter x:Key="SearchParmConverter"/>
+            <Style x:Key="searchEngineLabel" TargetType="Control">
+                <Setter Property="FontStyle" Value="Italic"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">            
+            <TextBox x:Name="txtSearch" Width="200" Margin="5" Padding="5" />
+            <Button Content="Search" x:Name="btnSearch" Margin="5" Padding="5"
+                    Command="{Binding Path=DataContext.SearchCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" 
+             CommandParameter="{Binding ElementName=txtSearch, Path=Text}"       >
+                
+            </Button>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Bottom" HorizontalAlignment="Right">
+            <Button Content="Add To Investigation" Margin="5" Padding="5"  Command="{Binding Path=DataContext.AddResultCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" />
+        </StackPanel>
+        <Grid x:Name="grdResults">
+            <ListView x:Name="lstResults" ItemsSource="{Binding  Results}" SelectionMode="Extended" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox Grid.Column="0" IsChecked="{Binding IsSelected ,Mode=TwoWay}"/>
+                                <StackPanel Orientation="Vertical" Grid.Column="1">
+                                    <TextBlock>
+                                    <Hyperlink NavigateUri="{Binding Url}" RequestNavigate="Hyperlink_RequestNavigate">
+                                        <TextBlock Text="{Binding Title}"/>
+                                    </Hyperlink>
+                                </TextBlock>
+                                    <Label Content="{Binding Text}"/>
+                                <Label Content="{Binding SourceSearchEngine}" Style="{StaticResource searchEngineLabel}"/>
+                            </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+        </Grid>
+    </DockPanel>
+</Window>
