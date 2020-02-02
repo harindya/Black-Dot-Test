@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Bds.Tech.Test.Model;
+using Bds.Tech.Test.ViewModel;
 
 namespace Bds.Tech.Test
 {

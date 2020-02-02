@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bds.Tech.Test
+namespace Bds.Tech.Test.ViewModel
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {

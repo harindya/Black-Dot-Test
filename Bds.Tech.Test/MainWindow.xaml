@@ -9,19 +9,24 @@
         DataContext="{Binding ViewModel, RelativeSource={RelativeSource Self}}">
     <Window.Resources>
         <ResourceDictionary>
-            <local:SearchParameterConverter x:Key="SearchParmConverter"/>
             <Style x:Key="searchEngineLabel" TargetType="Control">
                 <Setter Property="FontStyle" Value="Italic"/>
+                <Setter Property="Foreground" Value="Green"/>
             </Style>
         </ResourceDictionary>
     </Window.Resources>
     
     <DockPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">            
-            <TextBox x:Name="txtSearch" Width="200" Margin="5" Padding="5" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Top">
+            <TextBox x:Name="txtSearch" Width="200" Margin="5" Padding="5" >
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding Path=DataContext.SearchCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" 
+             CommandParameter="{Binding ElementName=txtSearch, Path=Text}" Key="Enter" />
+                </TextBox.InputBindings>
+            </TextBox>
             <Button Content="Search" x:Name="btnSearch" Margin="5" Padding="5"
                     Command="{Binding Path=DataContext.SearchCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" 
-             CommandParameter="{Binding ElementName=txtSearch, Path=Text}"       >
+             CommandParameter="{Binding ElementName=txtSearch, Path=Text}" >
                 
             </Button>
         </StackPanel>
@@ -29,12 +34,13 @@
             <Button Content="Add To Investigation" Margin="5" Padding="5"  Command="{Binding Path=DataContext.AddResultCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" />
         </StackPanel>
         <Grid x:Name="grdResults">
-            <ListView x:Name="lstResults" ItemsSource="{Binding  Results}" SelectionMode="Extended" ScrollViewer.CanContentScroll="True"
+            <ListView x:Name="lstResults" ItemsSource="{Binding  Results}" SelectionMode="Extended" 
                     ScrollViewer.VerticalScrollBarVisibility="Auto" >
                     <ListView.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
+                        <Style TargetType="ListViewItem">
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                        </Style>
+                            <!--<Setter Property="HorizontalContentAlignment" Value="Stretch" />-->
+                    </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -50,7 +56,7 @@
                                         <TextBlock Text="{Binding Title}"/>
                                     </Hyperlink>
                                 </TextBlock>
-                                    <Label Content="{Binding Text}"/>
+                                <TextBlock Text="{Binding Preview}"/>
                                 <Label Content="{Binding SourceSearchEngine}" Style="{StaticResource searchEngineLabel}"/>
                             </StackPanel>
                             </Grid>

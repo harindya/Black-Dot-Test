@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Bds.Tech.Test
+namespace Bds.Tech.Test.Model
 {
     public abstract class SearchEngineBase : ISearchEngine
     {
@@ -28,7 +28,7 @@ namespace Bds.Tech.Test
 
             catch (Exception ex)
             {
-                return "Error: " + ex.Message;
+                throw new BlackDotTestException("Error: " + ex.Message, ex);
             }
         }
 

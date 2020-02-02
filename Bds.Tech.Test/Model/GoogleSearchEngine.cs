@@ -68,7 +68,7 @@ namespace Bds.Tech.Test.Model
 
                 if (url != null && title != null)
                 {
-                    results.Add(new Result { Title = title, Url = url, Text = preview, SourceSearchEngine = nameof(GoogleSearchEngine) });
+                    results.Add(new Result { Title = title, Url = url, Preview = preview, SourceSearchEngine = nameof(GoogleSearchEngine) });
                 }
             }
 
