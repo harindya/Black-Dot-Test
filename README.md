@@ -4,7 +4,7 @@ Black Dot Tech Test
 Classes in .Model namespace
 Result and ResultPartial - Represent a search result.
 ISearchEngine interface and its implementations GoogleSearchEngine and BingSearchEngine
-ResultMixer for interleaving merging of the search results 
+ResultMixer for interleaving of the search results 
 
 Classes in .ViewModel namespace
 MainWindowViewModel - view model for MainWindow. Consists of commands to be executed to retrieve search results.
